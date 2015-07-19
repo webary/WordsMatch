@@ -14,7 +14,7 @@ private:
     CvSeq *contour;
     typedef float type;
     type p_u[MAXSIZE], p_v[MAXSIZE];
-    int x, y, w, h, ww, hh;	//Ä¿±êÔÚÍ¼ÏñÖĞ×î×óÉÏ·½µÄµãµÄ×ø±ê£»Ä¿±êµÄ¿í¶ÈºÍ¸ß¶È;ÓĞĞ§¿í¶ÈºÍ¸ß¶È
+    int x, y, w, h, ww, hh;	//ç›®æ ‡åœ¨å›¾åƒä¸­æœ€å·¦ä¸Šæ–¹çš„ç‚¹çš„åæ ‡ï¼›ç›®æ ‡çš„å®½åº¦å’Œé«˜åº¦;æœ‰æ•ˆå®½åº¦å’Œé«˜åº¦
 #define targetIsBlack 1
 
     void getSum(type *vec, int &len);
@@ -27,13 +27,13 @@ private:
     void matchProjection();
     void matchContours();
     void matchBias();
-    void Bias(uchar pgray[MAXSIZE][MAXSIZE]);//ÇãĞ±ÏòÁ¿Êı×é
+    void Bias(uchar pgray[MAXSIZE][MAXSIZE]);//å€¾æ–œå‘é‡æ•°ç»„
 public:
     uchar R[MAXSIZE][MAXSIZE],G[MAXSIZE][MAXSIZE],B[MAXSIZE][MAXSIZE];
     IplImage* tar_img;
     char fileName[128];
     double sum, entropy, whError, comError[2], huError, surfError,
-		weightError[4], entrError,bias[3],biasError, Error;//Ìí¼ÓÇãĞ±ÏòÁ¿µÄ3¸ö·ÖÁ¿
+		weightError[4], entrError,bias[3],biasError, Error;//æ·»åŠ å€¾æ–œå‘é‡çš„3ä¸ªåˆ†é‡
     Target(int xx=-1,int yy=-1,int ww=-1,int hh=-1);
     Target(cchar* path1,cchar* path2,cchar *saveError=0,int same=-1,int ww=0,int hh=0);
 #ifdef __AFXWIN_H__
@@ -49,7 +49,7 @@ public:
     double compare(Target &model,cchar *saveError=0,int same=-1,int re=0,double *ratio=0,int ww=0,int hh=0);
     void saveUVToFile(cchar* fileout,cchar* ps=0,int hh=0,int ww=0);
 };
-const int Ch_Num = 11;	//¶¨ÒåÌØÕ÷¸öÊı
+const int Ch_Num = 11;	//å®šä¹‰ç‰¹å¾ä¸ªæ•°
 
 #endif
 
@@ -69,7 +69,7 @@ Target::~Target() {
 	releaseImg(&tar_img);
 	if(contour) cvReleaseMemStorage(&contour -> storage);
 }
-// ÅĞ¶ÏÊÇ·ñÎªÄ¿±êµã
+// åˆ¤æ–­æ˜¯å¦ä¸ºç›®æ ‡ç‚¹
 bool Target::isTargetPoint(const int& i,const int& j) {
     if(targetIsBlack) {
         if(tar_img->nChannels==1)
@@ -83,20 +83,20 @@ bool Target::isTargetPoint(const int& i,const int& j) {
             return R[i][j] + G[i][j] + B[i][j] > 376;
     }
 }
-//¼ÆËãÇãĞ±ÏòÁ¿//´«½øÀ´µÄÊÇ¶şÖµ»¯´¦ÀíºóµÄÊı×é£¬ÒÔ¼°Í¼ÏñµÄ³¤¿í
+//è®¡ç®—å€¾æ–œå‘é‡//ä¼ è¿›æ¥çš„æ˜¯äºŒå€¼åŒ–å¤„ç†åçš„æ•°ç»„ï¼Œä»¥åŠå›¾åƒçš„é•¿å®½
 void Target::Bias(uchar pgray[MAXSIZE][MAXSIZE]) { 
-    bias[0]=0;//¸º·½ÏòÇãĞ±µã¼ÇÂ¼
-    bias[1]=0;//Õı·½ÏòÇãĞ±µã
-    bias[2]=0;//´¹Ö±ÇãĞ±µã
-	//¶ÔÍ¼Ïñ»Ò¶ÈÊı¾İ½øĞĞ±éÀú
+    bias[0]=0;//è´Ÿæ–¹å‘å€¾æ–œç‚¹è®°å½•
+    bias[1]=0;//æ­£æ–¹å‘å€¾æ–œç‚¹
+    bias[2]=0;//å‚ç›´å€¾æ–œç‚¹
+	//å¯¹å›¾åƒç°åº¦æ•°æ®è¿›è¡Œéå†
 	for(int i=1; i<tar_img->height-1; i++)
 		for(int j=1; j<tar_img->width-1; j++) {
 			if(pgray[i][j]<150) {
-				if(pgray[i+1][j-1]<150)	//×óÏÂ
+				if(pgray[i+1][j-1]<150)	//å·¦ä¸‹
 					bias[0]++;
-				if(pgray[i+1][j]<150)	//ÏÂ
+				if(pgray[i+1][j]<150)	//ä¸‹
 					bias[1]++;
-				if(pgray[i+1][j+1]<150)	//ÓÒÏÂ
+				if(pgray[i+1][j+1]<150)	//å³ä¸‹
 					bias[2]++;
 			}
 		}
@@ -105,32 +105,32 @@ void Target::Bias(uchar pgray[MAXSIZE][MAXSIZE]) {
 		//MessageBox(0,ss,0,0);
 		double  sum=bias[0]+bias[1]+bias[2];
 		if(sum>0){
-			bias[1]=bias[1]/sum;//¹éÒ»»¯µ½0-1Ö®¼ä,ÒÔÊı×é·½Ê½·µ»Ø
+			bias[1]=bias[1]/sum;//å½’ä¸€åŒ–åˆ°0-1ä¹‹é—´,ä»¥æ•°ç»„æ–¹å¼è¿”å›
 			bias[0]=bias[0]/sum;
 			bias[2]=bias[2]/sum;
 		}
 }
-// ÊúÖ±ºÍË®Æ½Í¶Ó°
+// ç«–ç›´å’Œæ°´å¹³æŠ•å½±
 void Target::projectionUV() {
 	memset(p_u,0,sizeof(p_u));
 	memset(p_v,0,sizeof(p_v));
     int i,j;
-    for(i=x; i<x+w; i++)	//ÊúÖ±Í¶Ó°
+    for(i=x; i<x+w; i++)	//ç«–ç›´æŠ•å½±
         for(j=2; j<tar_img->height-2; j++)
             if(isTargetPoint(j,i))
                 p_v[i-x]++;
-    for(i=y; i<y+h; i++)	//Ë®Æ½Í¶Ó°
+    for(i=y; i<y+h; i++)	//æ°´å¹³æŠ•å½±
         for(j=2; j<tar_img->width-2; j++)
             if(isTargetPoint(i,j))
                 p_u[i-y]++;
 }
-// µÃµ½Í¶Ó°ÇøÓòÄ¿±êµã¸öÊı
+// å¾—åˆ°æŠ•å½±åŒºåŸŸç›®æ ‡ç‚¹ä¸ªæ•°
 void Target::getSum(type *vec, int &len) {
     sum = 0;
     for(int i=0; i<len; i++)
         sum += vec[i];
 }
-// ±£´æÍ¼Æ¬ÏñËØĞÅÏ¢µ½Êı×é
+// ä¿å­˜å›¾ç‰‡åƒç´ ä¿¡æ¯åˆ°æ•°ç»„
 void Target::saveRGB(IplImage* img,cchar* name) {
     if(img==0)
         return;
@@ -150,15 +150,15 @@ void Target::saveRGB(IplImage* img,cchar* name) {
                 R[y][x] = data[yy+x];
     }
 }
-// ¹éÒ»»¯
+// å½’ä¸€åŒ–
 void Target::Normalize(type *vec, int &len, int toLength) {
     int i;
     if(len!=toLength) {
         double scale = (double)len / toLength;
-        if(scale<1) {	//´ÓĞ¡Çø¼ä×ªÒÆµ½´óÇø¼ä£¬Ôò´ÓºóÍùÇ°
+        if(scale<1) {	//ä»å°åŒºé—´è½¬ç§»åˆ°å¤§åŒºé—´ï¼Œåˆ™ä»åå¾€å‰
             for(i=toLength-1; i>=0; i--)
                 vec[i] = vec[(int)(i*scale+.5)];
-        } else if(scale>1) {	//´Ó´óÇø¼ä×ªÒÆµ½Ğ¡Çø¼ä£¬Ôò´ÓÇ°Íùºó
+        } else if(scale>1) {	//ä»å¤§åŒºé—´è½¬ç§»åˆ°å°åŒºé—´ï¼Œåˆ™ä»å‰å¾€å
             for(i=0; i<toLength; i++)
                 vec[i] = vec[(int)(i*scale+.5)];
         }
@@ -169,27 +169,27 @@ void Target::Normalize(type *vec, int &len, int toLength) {
         for(i=0; i<len; i++)
             vec[i] /= (float)sum;
 }
-// ¹éÒ»»¯Ö÷µ÷º¯Êı
+// å½’ä¸€åŒ–ä¸»è°ƒå‡½æ•°
 void Target::Normalize(int toLength_h,int toLength_w) {
-    Normalize(p_u,h,toLength_h);//Ë®Æ½·½Ïò¹éÒ»»¯
-    Normalize(p_v,w,toLength_w);//ÊúÖ±·½Ïò¹éÒ»»¯
+    Normalize(p_u,h,toLength_h);//æ°´å¹³æ–¹å‘å½’ä¸€åŒ–
+    Normalize(p_v,w,toLength_w);//ç«–ç›´æ–¹å‘å½’ä¸€åŒ–
 }
-// Æ¥ÅäÓĞĞ§¿í¸ß±ÈÀı
+// åŒ¹é…æœ‰æ•ˆå®½é«˜æ¯”ä¾‹
 void Target::matchWidthHeight() {
     if(hh<=0 || p_model->hh<=0) {
 #ifndef __AFXWIN_H__
         if(hh<=0)
-            cout<<">>>Ä¿±ê¶ÔÏó»¹Î´³õÊ¼»¯<<<\n";
+            cout<<">>>ç›®æ ‡å¯¹è±¡è¿˜æœªåˆå§‹åŒ–<<<\n";
         if(hh>0 && p_model->hh<=0)
-            cout<<">>>Ä£°å¶ÔÏó»¹Î´³õÊ¼»¯<<<\n";
-        fprintf(stderr,"Çë³õÊ¼»¯ºóÔÙ½øĞĞÆ¥Åä\n\n");
+            cout<<">>>æ¨¡æ¿å¯¹è±¡è¿˜æœªåˆå§‹åŒ–<<<\n";
+        fprintf(stderr,"è¯·åˆå§‹åŒ–åå†è¿›è¡ŒåŒ¹é…\n\n");
         exit(-1);
 #else
         if(hh<=0)
-            sprintf(info,"%s>>>Ä¿±ê¶ÔÏó»¹Î´³õÊ¼»¯<<<\r\n",info);
+            sprintf(info,"%s>>>ç›®æ ‡å¯¹è±¡è¿˜æœªåˆå§‹åŒ–<<<\r\n",info);
         if(hh>0 && p_model->hh<=0)
-            sprintf(info,"%s>>>Ä£°å¶ÔÏó»¹Î´³õÊ¼»¯<<<\r\n",info);
-        sprintf(info,"%sÇë³õÊ¼»¯ºóÔÙ½øĞĞÆ¥Åä\r\n",info);
+            sprintf(info,"%s>>>æ¨¡æ¿å¯¹è±¡è¿˜æœªåˆå§‹åŒ–<<<\r\n",info);
+        sprintf(info,"%sè¯·åˆå§‹åŒ–åå†è¿›è¡ŒåŒ¹é…\r\n",info);
 #endif
     }
     double d1 = (double)ww / hh;
@@ -199,18 +199,18 @@ void Target::matchWidthHeight() {
     else
         whError = d1 / d2;
 #ifndef __AFXWIN_H__
-    cout<<"¿í¸ßÏàËÆ¸ÅÂÊÎª:\t\t"<<setprecision(3)<<whError;
+    cout<<"å®½é«˜ç›¸ä¼¼æ¦‚ç‡ä¸º:\t\t"<<setprecision(3)<<whError;
     if(whError<0.8)
-        cout<<"  (warning : ¼ì²âµ½¿í¸ßÎó²î¹ı´ó£¡)";
+        cout<<"  (warning : æ£€æµ‹åˆ°å®½é«˜è¯¯å·®è¿‡å¤§ï¼)";
     cout<<endl;
 #else
-	sprintf(info,"%s¿í¸ßÏàËÆ¸ÅÂÊÎª:\t\t%g",info,whError);
+	sprintf(info,"%så®½é«˜ç›¸ä¼¼æ¦‚ç‡ä¸º:\t\t%g",info,whError);
     if(whError<0.8)
-		sprintf(info,"%s  (warning : ¼ì²âµ½¿í¸ßÎó²î¹ı´ó£¡)",info);
+		sprintf(info,"%s  (warning : æ£€æµ‹åˆ°å®½é«˜è¯¯å·®è¿‡å¤§ï¼)",info);
 	sprintf(info,"%s\r\n",info);
 #endif
 }
-// Æ¥ÅäÍ¶Ó°
+// åŒ¹é…æŠ•å½±
 void Target::matchProjection() {
     if(h==p_model->h && w==p_model->w) {
         comError[0] = comError[1] = 0;
@@ -225,28 +225,28 @@ void Target::matchProjection() {
 			else
 				comError[i] = 1/(comError[i]+1);
 #ifndef __AFXWIN_H__
-        cout<<"Í¶Ó°ÏàËÆ¸ÅÂÊÎª:\t\t"<<comError[0]<<","<<comError[1]<<endl;
+        cout<<"æŠ•å½±ç›¸ä¼¼æ¦‚ç‡ä¸º:\t\t"<<comError[0]<<","<<comError[1]<<endl;
     } else
-        cout<<"ÇëÏÈ½«Á½¸öÍ¶Ó°¹éÒ»»¯µ½Í¬Ò»Çø¼ä !"<<endl;
+        cout<<"è¯·å…ˆå°†ä¸¤ä¸ªæŠ•å½±å½’ä¸€åŒ–åˆ°åŒä¸€åŒºé—´ !"<<endl;
 #else
-		sprintf(info,"%sÍ¶Ó°ÏàËÆ¸ÅÂÊÎª :\t%g,%g\r\n",info,comError[0],comError[1]);
+		sprintf(info,"%sæŠ•å½±ç›¸ä¼¼æ¦‚ç‡ä¸º :\t%g,%g\r\n",info,comError[0],comError[1]);
 	} else
-		sprintf(info,"%sÇëÏÈ½«Á½¸öÍ¶Ó°¹éÒ»»¯µ½Í¬Ò»Çø¼ä !\r\n",info);
+		sprintf(info,"%sè¯·å…ˆå°†ä¸¤ä¸ªæŠ•å½±å½’ä¸€åŒ–åˆ°åŒä¸€åŒºé—´ !\r\n",info);
 #endif
 }
-// Æ¥ÅäÂÖÀª
+// åŒ¹é…è½®å»“
 void Target::matchContours() {
     if(contour && p_model->contour) {
 		huError = cvMatchShapes(contour,p_model->contour,CV_CONTOURS_MATCH_I3);
         huError = 1 / (1.+huError);
 #ifndef __AFXWIN_H__
-        cout<<"ÂÖÀªHu¾ØÏàËÆ¸ÅÂÊÎª:\t"<<huError<<endl;
+        cout<<"è½®å»“HuçŸ©ç›¸ä¼¼æ¦‚ç‡ä¸º:\t"<<huError<<endl;
 #else
-		sprintf(info,"%sÂÖÀªHu¾ØÏàËÆ¸ÅÂÊÎª :\t%g\r\n",info,huError);
+		sprintf(info,"%sè½®å»“HuçŸ©ç›¸ä¼¼æ¦‚ç‡ä¸º :\t%g\r\n",info,huError);
 #endif
     }
 }
-//Æ¥Åä¹Ç¼ÜÇãĞ±ÏòÁ¿
+//åŒ¹é…éª¨æ¶å€¾æ–œå‘é‡
 double Target::matchBias() {
 	Target &model = *p_model;
 	double err = fabs(bias[0]-model.bias[0])+fabs(bias[1]-model.bias[1])+fabs(bias[2]-model.bias[2]);
@@ -257,12 +257,11 @@ double Target::matchBias() {
 	//CString ss;
 	//ss.Format("%s:%.3f  %.3f  %.3f\r\n%s:%.3f  %.3f  %.3f",fileName,bias[0],bias[1],bias[2],model.fileName,model.bias[0],model.bias[1],model.bias[2]);
 	//MessageBox(0,ss,0,0);
-	return (1-err/2)*(1-err/2)*(1-err/2);	//Ôö´óÎ¢Á¿Ö®¼äµÄ²î±ğ
+	return (1-err/2)*(1-err/2)*(1-err/2);	//å¢å¤§å¾®é‡ä¹‹é—´çš„å·®åˆ«
 }
-//¿ØÖÆ²¢ÂË³ıÆ«°×£¨ÁÁ¶È½Ï¸ß£©µÄÔëÉùµã
-void Target::controlWhtieNoise(int th)
-{
-	//ÁíÒ»ÖÖË¼Ïë£ºif(R[i][j]>th && G[i][j]>th && B[i][j]>th)
+//æ§åˆ¶å¹¶æ»¤é™¤åç™½ï¼ˆäº®åº¦è¾ƒé«˜ï¼‰çš„å™ªå£°ç‚¹
+void Target::controlWhtieNoise(int th) {
+	//å¦ä¸€ç§æ€æƒ³ï¼šif(R[i][j]>th && G[i][j]>th && B[i][j]>th)
 	for(int i=0; i<tar_img->height; i++)
 		for(int j=0; j<tar_img->width; j++){
 			if(tar_img->nChannels==3) {
@@ -275,9 +274,8 @@ void Target::controlWhtieNoise(int th)
 					R[i][j] = (uchar)255;
 		}
 }
-//±£´æµ±Ç°µÄRGBÊı×éµ½IplImageÖ¸ÕëÖĞ
-void Target::saveIplImage()
-{
+//ä¿å­˜å½“å‰çš„RGBæ•°ç»„åˆ°IplImageæŒ‡é’ˆä¸­
+void Target::saveIplImage() {
 	uchar* data = (uchar*)tar_img->imageData;
 	if(tar_img->nChannels==3)
 	{
@@ -297,8 +295,8 @@ void Target::saveIplImage()
 	}
 }
 
-/**---- TargetÀàÌá¹©ÏÂÁĞÍâ²¿½Ó¿Ú ----**/
-// ÏÔÊ¾Ä¿±êÇøÓòĞÅÏ¢
+/**---- Targetç±»æä¾›ä¸‹åˆ—å¤–éƒ¨æ¥å£ ----**/
+// æ˜¾ç¤ºç›®æ ‡åŒºåŸŸä¿¡æ¯
 void Target::showUVWH(string ps) {
 #ifndef __AFXWIN_H__
     cout<<ps<<" x:"<<x<<"\ty:"<<y<<"\th:"<<h<<"\tw:"<<w<<endl;
@@ -306,10 +304,10 @@ void Target::showUVWH(string ps) {
 	sprintf(info,"%s%s x:%d  y:%d  h:%d  w:%d\r\n",info,ps,x,y,h,w);
 #endif
 }
-// »ñÈ¡Ä¿±êÇøÓòĞÅÏ¢
+// è·å–ç›®æ ‡åŒºåŸŸä¿¡æ¯
 void Target::getTargetInfo(cchar *path,int ask,int show) {
 	x=y=w=h=-1;
-	releaseImg(&tar_img);	//ÊÍ·ÅÇ°Ò»´ÎÓÃ¹ıµÄÍ¼Ïñ
+	releaseImg(&tar_img);	//é‡Šæ”¾å‰ä¸€æ¬¡ç”¨è¿‡çš„å›¾åƒ
 	if(contour) {
 		cvReleaseMemStorage(&contour -> storage);
 		contour = 0;
@@ -334,56 +332,56 @@ void Target::getTargetInfo(cchar *path,int ask,int show) {
 		strftime(tmpbuf2, 128, "%H%M%S", newtime);
 		//sprintf_s(newName,"%s\\%s\\%s%s-%d",newName,db_t.source,tmpbuf,tmpbuf2,clock()%10000/*,strrchr(path,'\\')+1,1000+rand()%9000*/);
 		sprintf_s(newName, "%s-%s-%d-%s", tmpbuf, tmpbuf2, clock() % 10000, strrchr(path, '\\') + 1);
-		getcwd(tmpbuf, 128);		//µÃµ½µ±Ç°Ä¿Â¼
+		getcwd(tmpbuf, 128);		//å¾—åˆ°å½“å‰ç›®å½•
 		sprintf_s(tmpbuf, "%s\\%s\\%s", tmpbuf, db_t.source, newName);
 		char md5[33];
 		int t2 = clock();
 		Md5.GetFileMd5(md5, path);
 		//LOGT("getMD5:" << clock() - t2 << "\t" << t2 - t1 << endl;);
 		CString re = db_t.findData(md5, 2), fileNew = db_t.source + ("\\" + re);
-		if (re[0] == 0 || !PathFileExists(fileNew)){	//µ±Ç°»¹Î´ÔØÈë¹ı´ËÍ¼
-			db_t.addRow(md5, path, newName);	//Ôö¼Ó¸ÃĞĞ¼ÇÂ¼
-			///ÒÔÏÂÎªÔ¤´¦Àí²¿·Ö
+		if (re[0] == 0 || !PathFileExists(fileNew)){	//å½“å‰è¿˜æœªè½½å…¥è¿‡æ­¤å›¾
+			db_t.addRow(md5, path, newName);	//å¢åŠ è¯¥è¡Œè®°å½•
+			///ä»¥ä¸‹ä¸ºé¢„å¤„ç†éƒ¨åˆ†
 			tar_img = loadImg(path, ask, 0, 0, show);
 			saveRGB(tar_img);
-			controlWhtieNoise(Otsu(tar_img));	//¸ü¸ÄRGB£ºÓÃ×Ô¶¯ãĞÖµÈ¥Ôë
-			saveIplImage();						//½«RGB±£´æµ½Í¼ÏñÖ¸Õë
+			controlWhtieNoise(Otsu(tar_img));	//æ›´æ”¹RGBï¼šç”¨è‡ªåŠ¨é˜ˆå€¼å»å™ª
+			saveIplImage();						//å°†RGBä¿å­˜åˆ°å›¾åƒæŒ‡é’ˆ
 			saveImg(tmpbuf, tar_img);
 		}else{
 			tar_img = loadImg(fileNew, ask, 0, 0, show);
 			saveRGB(tar_img);
 		}
-		//LOGT("²Ù×÷Êı¾İ¿â£º" << clock() - t1 << endl);
+		//LOGT("æ“ä½œæ•°æ®åº“ï¼š" << clock() - t1 << endl);
 	}
 	else{
 		tar_img = loadImg(path, ask, 0, 0, show);
 		saveRGB(tar_img);
-		controlWhtieNoise(Otsu(tar_img));	//¸ü¸ÄRGB£ºÓÃ×Ô¶¯ãĞÖµÈ¥Ôë
-		saveIplImage();						//½«RGB±£´æµ½Í¼ÏñÖ¸Õë
+		controlWhtieNoise(Otsu(tar_img));	//æ›´æ”¹RGBï¼šç”¨è‡ªåŠ¨é˜ˆå€¼å»å™ª
+		saveIplImage();						//å°†RGBä¿å­˜åˆ°å›¾åƒæŒ‡é’ˆ
 	}
     int i,j;
-	//ÕÒµ½×ó±ß½ç
+	//æ‰¾åˆ°å·¦è¾¹ç•Œ
     for(i=2; i<tar_img->width-2 && x<0; i++)
         for(j=2; j<tar_img->height-3; j++)
             if(isTargetPoint(j,i) && isTargetPoint(j+1,i)) {
                 x = i;
                 break;
             }
-	//ÕÒµ½ÓÒ±ß½ç
+	//æ‰¾åˆ°å³è¾¹ç•Œ
     for(i=tar_img->width-3; i>0 && w<0; i--)
         for(j=2; j<tar_img->height-3; j++)
             if(isTargetPoint(j,i) && isTargetPoint(j+1,i)) {
                 w = i - x + 1;
                 break;
             }
-	//ÕÒµ½ÉÏ±ß½ç
+	//æ‰¾åˆ°ä¸Šè¾¹ç•Œ
     for(i=2; i<tar_img->height-2 && y<0; i++)
         for(j=2; j<tar_img->width-3; j++)
             if(isTargetPoint(i,j) && isTargetPoint(i,j+1)) {
                 y = i;
                 break;
             }
-	//ÕÒµ½ÏÂ±ß½ç
+	//æ‰¾åˆ°ä¸‹è¾¹ç•Œ
     for(i=tar_img->height-3; i>0 && h<0; i--)
         for(j=2; j<tar_img->width-3; j++)
             if(isTargetPoint(i,j) && isTargetPoint(i,j+1)) {
@@ -391,8 +389,8 @@ void Target::getTargetInfo(cchar *path,int ask,int show) {
                 break;
             }
 
-	ww = w, hh = h;	//Ä¿±êµÄÓĞĞ§¿í´øºÍ¸ß¶È---È¥³ıÁË¿Õ°×ĞĞºÍ¿Õ°×ÁĞ
-	//´Ó×ó±ß½çËÑË÷µ½ÓÒ±ß½ç
+	ww = w, hh = h;	//ç›®æ ‡çš„æœ‰æ•ˆå®½å¸¦å’Œé«˜åº¦---å»é™¤äº†ç©ºç™½è¡Œå’Œç©ºç™½åˆ—
+	//ä»å·¦è¾¹ç•Œæœç´¢åˆ°å³è¾¹ç•Œ
 	for(int i=x,j; i<x+w; i++)
 	{
 		for(j=y; j<y+h; j++)
@@ -401,7 +399,7 @@ void Target::getTargetInfo(cchar *path,int ask,int show) {
 		if(j==y+h)
 			ww--;
 	}
-	//´ÓÉÏ±ß½çËÑË÷µ½ÏÂ±ß½ç
+	//ä»ä¸Šè¾¹ç•Œæœç´¢åˆ°ä¸‹è¾¹ç•Œ
 	for(int j=y,i; j<y+h; j++)
 	{
 		for(i=x; i<x+w; i++)
@@ -411,9 +409,9 @@ void Target::getTargetInfo(cchar *path,int ask,int show) {
 			hh--;
 	}
 
-	//¼ÆËãºáÏòºÍ×İÏòµÄÍ¶Ó°
+	//è®¡ç®—æ¨ªå‘å’Œçºµå‘çš„æŠ•å½±
     projectionUV();
-	//µÃµ½ĞÅÏ¢ìØ---±ØĞëÏÈ¼ÆËãĞÅÏ¢ìØºóÔÙ²éÕÒÂÖÀª£¬·ÀÖ¹¼ÆËãĞÅÏ¢ìØÊ±ÊäÈë¼´ÎªÂÖÀª
+	//å¾—åˆ°ä¿¡æ¯ç†µ---å¿…é¡»å…ˆè®¡ç®—ä¿¡æ¯ç†µåå†æŸ¥æ‰¾è½®å»“ï¼Œé˜²æ­¢è®¡ç®—ä¿¡æ¯ç†µæ—¶è¾“å…¥å³ä¸ºè½®å»“
 	IplImage *dst = cvCreateImage(cvGetSize(tar_img),tar_img->depth,tar_img->nChannels);
     if(ask!=-2) {
         ///int ttt = clock();
@@ -425,7 +423,7 @@ void Target::getTargetInfo(cchar *path,int ask,int show) {
     Bias(R);
     saveRGB(tar_img);
     releaseImg(&dst);
-	//²éÕÒÂÖÀª
+	//æŸ¥æ‰¾è½®å»“
     contour = ::findContour(tar_img,0);
 }
 #ifdef __AFXWIN_H__
@@ -433,7 +431,7 @@ void Target::getTargetInfo(CString& path,int ask,int show){
 	getTargetInfo((LPSTR)(LPCTSTR)path,ask,show);
 }
 #endif
-// ´ÓÎÄ¼şÖĞ»ñÈ¡Ä¿±êÍ¶Ó°ĞÅÏ¢
+// ä»æ–‡ä»¶ä¸­è·å–ç›®æ ‡æŠ•å½±ä¿¡æ¯
 void Target::getUVFromFile(cchar* filein) {
     strcpy(fileName,filein);
     FILE * fp = fopen(filein,"r");
@@ -448,21 +446,21 @@ void Target::getUVFromFile(cchar* filein) {
         fclose(fp);
     } else
 #ifndef __AFXWIN_H__
-        cout<<"´ÓÎÄ¼ş¶ÁÈ¡UVÍ¶Ó°Ê§°Ü: ÎÄ¼ş"<<filein<<"´ò¿ªÊ§°Ü"<<endl;
+        cout<<"ä»æ–‡ä»¶è¯»å–UVæŠ•å½±å¤±è´¥: æ–‡ä»¶"<<filein<<"æ‰“å¼€å¤±è´¥"<<endl;
 #else
-		sprintf(info,"%s´ÓÎÄ¼ş¶ÁÈ¡UVÍ¶Ó°Ê§°Ü: ÎÄ¼ş%s´ò¿ªÊ§°Ü\r\n",info,filein);
+		sprintf(info,"%sä»æ–‡ä»¶è¯»å–UVæŠ•å½±å¤±è´¥: æ–‡ä»¶%sæ‰“å¼€å¤±è´¥\r\n",info,filein);
 #endif
     contour = 0;
 }
-// ±È½ÏÁ½¸öÄ¿±êµÄÏàËÆ¶È
+// æ¯”è¾ƒä¸¤ä¸ªç›®æ ‡çš„ç›¸ä¼¼åº¦
 double Target::compare(Target &mod,cchar *saveError,int same,int re,double *ratio,int ww,int hh) {
 	int ttt = clock();
 	if(re!=-1){
 		p_model = &mod;
 #ifndef __AFXWIN_H__
-		cout<<fileName<<"Óë"<<mod.fileName<<"Æ¥Åä½á¹ûÈçÏÂ:\n"<<endl;
+		cout<<fileName<<"ä¸"<<mod.fileName<<"åŒ¹é…ç»“æœå¦‚ä¸‹:\n"<<endl;
 #else
-		sprintf(info,"%s\"%s\"Óë\"%s\"Æ¥Åä½á¹ûÈçÏÂ:\r\n",info,fileName,mod.fileName);
+		sprintf(info,"%s\"%s\"ä¸\"%s\"åŒ¹é…ç»“æœå¦‚ä¸‹:\r\n",info,fileName,mod.fileName);
 #endif
 		matchWidthHeight();	//1ms
 		if(ww==0 && 0==hh) {
@@ -479,18 +477,18 @@ double Target::compare(Target &mod,cchar *saveError,int same,int re,double *rati
 		matchWeight(tar_img, mod.tar_img, weightError);	//10ms
 		//LOGT("matchWeight:\t"<<clock()-ttt<<endl);
 		entrError = 1-sqrt(fabs(entropy-mod.entropy));
-		biasError = matchBias();//µÃµ½ÇãĞ±ÏòÁ¿µÄÖµ
+		biasError = matchBias();//å¾—åˆ°å€¾æ–œå‘é‡çš„å€¼
 		Error = ratio[0]*whError + ratio[1]/2*(comError[0] + comError[1]) + ratio[2]*huError
 			+ ratio[3]*surfError + ratio[4]/4*(weightError[0]+weightError[1]+weightError[2]+weightError[3])
 			+ ratio[5]*entrError + ratio[6]*biasError;
 #ifndef __AFXWIN_H__
-		cout<<"Ï¸»¯ºó¹Ç¼ÜÏàËÆ¸ÅÂÊÎª:\t"<<entrError<<endl;
-		cout<<"¹Ç¼ÜÇãĞ±ÏòÁ¿ÏàËÆ¸ÅÂÊÎª:\t"<<biasError<<endl;
-		cout<<"\n×ÛºÏÏàËÆ¸ÅÂÊÎª: \t\t"<<Error<<endl;
+		cout<<"ç»†åŒ–åéª¨æ¶ç›¸ä¼¼æ¦‚ç‡ä¸º:\t"<<entrError<<endl;
+		cout<<"éª¨æ¶å€¾æ–œå‘é‡ç›¸ä¼¼æ¦‚ç‡ä¸º:\t"<<biasError<<endl;
+		cout<<"\nç»¼åˆç›¸ä¼¼æ¦‚ç‡ä¸º: \t\t"<<Error<<endl;
 #else
-		sprintf(info,"%sÏ¸»¯ºó¹Ç¼ÜÏàËÆ¸ÅÂÊÎª:\t%g\r\n",info,entrError);
-		sprintf(info,"%s¹Ç¼ÜÇãĞ±ÏòÁ¿ÏàËÆ¸ÅÂÊÎª :%g\r\n",info,biasError);
-		sprintf(info,"%s\r\n×ÛºÏÏàËÆ¸ÅÂÊÎª :\t%g\r\n",info,Error);
+		sprintf(info,"%sç»†åŒ–åéª¨æ¶ç›¸ä¼¼æ¦‚ç‡ä¸º:\t%g\r\n",info,entrError);
+		sprintf(info,"%séª¨æ¶å€¾æ–œå‘é‡ç›¸ä¼¼æ¦‚ç‡ä¸º :%g\r\n",info,biasError);
+		sprintf(info,"%s\r\nç»¼åˆç›¸ä¼¼æ¦‚ç‡ä¸º :\t%g\r\n",info,Error);
 #endif
 		if(re>0)
 			return Error;
@@ -499,7 +497,7 @@ double Target::compare(Target &mod,cchar *saveError,int same,int re,double *rati
         FILE *fp1 = fopen(saveError,"a+");
 		if(!fp1)
 		{
-			MessageBox(0,"ÎŞ·¨ÔÚÖ¸¶¨Î»ÖÃ´´½¨ÎÄ¼ş£¬Çë¸ü¸ÄÈí¼şÔËĞĞÄ¿Â¼ºóÖØÊÔ£¡","ÔËĞĞÖÕÖ¹ÌáÊ¾",0);
+			MessageBox(0,"æ— æ³•åœ¨æŒ‡å®šä½ç½®åˆ›å»ºæ–‡ä»¶ï¼Œè¯·æ›´æ”¹è½¯ä»¶è¿è¡Œç›®å½•åé‡è¯•ï¼","è¿è¡Œç»ˆæ­¢æç¤º",0);
 			abort();
 		}
 		double error[Ch_Num] = {whError,comError[0],comError[1],huError,surfError,weightError[0],weightError[1],weightError[2],weightError[3],entrError,biasError};
@@ -514,14 +512,14 @@ double Target::compare(Target &mod,cchar *saveError,int same,int re,double *rati
     }
 	return 0;
 }
-// ½«Ä¿±êÍ¶Ó°ĞÅÏ¢±£´æµ½ÎÄ¼ş
+// å°†ç›®æ ‡æŠ•å½±ä¿¡æ¯ä¿å­˜åˆ°æ–‡ä»¶
 void Target::saveUVToFile(cchar* fileout,cchar* ps,int hh,int ww) {
     if(hh && ww) {
         if(p_u[0]==0) {
 #ifndef __AFXWIN_H__
-            cout<<"ÖØĞÂ·ÖÅäÄÚ´æ"<<endl;
+            cout<<"é‡æ–°åˆ†é…å†…å­˜"<<endl;
 #else
-			sprintf(info,"%sÖØĞÂ·ÖÅäÄÚ´æ\r\n",info);
+			sprintf(info,"%sé‡æ–°åˆ†é…å†…å­˜\r\n",info);
 #endif
             projectionUV();
         }
@@ -545,8 +543,8 @@ void Target::saveUVToFile(cchar* fileout,cchar* ps,int hh,int ww) {
         fclose(fp);
     } else
 #ifndef __AFXWIN_H__
-        cout<<"±£´æÍ¶Ó°Ê§°Ü: ÎÄ¼ş"<<fileout<<"´ò¿ªÊ§°Ü"<<endl;
+        cout<<"ä¿å­˜æŠ•å½±å¤±è´¥: æ–‡ä»¶"<<fileout<<"æ‰“å¼€å¤±è´¥"<<endl;
 #else
-		sprintf(info,"%s±£´æÍ¶Ó°Ê§°Ü: ÎÄ¼ş%s´ò¿ªÊ§°Ü\r\n",info,fileout);
+		sprintf(info,"%sä¿å­˜æŠ•å½±å¤±è´¥: æ–‡ä»¶%sæ‰“å¼€å¤±è´¥\r\n",info,fileout);
 #endif
 }

@@ -1,0 +1,591 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\imgMatch.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\imgMatch.ico"
+IDR_IMGMATTYPE          ICON                    "res\\imgMatchDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "匹配(&C)"
+    BEGIN
+        MENUITEM "载入模板图",                       ID_Open_Model_many
+        POPUP "矩阵模版演化"
+        BEGIN
+            POPUP "载入训练集"
+            BEGIN
+                MENUITEM "新增正训练集",                      ID_train_p
+                MENUITEM "新增负训练集",                      ID_train_n
+                MENUITEM SEPARATOR
+                MENUITEM "重置正训练集",                      ID_Clear_p
+                MENUITEM "重置负训练集",                      ID_Clear_N
+                MENUITEM "重置全部训练集",                     ID_Clear_Train
+            END
+            MENUITEM SEPARATOR
+            MENUITEM "开始演化训练",                      ID_Start_Evolution
+        END
+        POPUP "载入测试图"
+        BEGIN
+            MENUITEM "新增测试图",                       ID_Add_Test
+            MENUITEM SEPARATOR
+            MENUITEM "重置测试图",                       ID_Clear_Test
+        END
+        MENUITEM "开始匹配",                        ID_Start_Match
+        MENUITEM "保存匹配结果",                      IDC_SaveMatch
+        MENUITEM SEPARATOR
+        MENUITEM "退出程序\tESC",                   ID_Quit
+    END
+    POPUP "查看(&V)"
+    BEGIN
+        MENUITEM "查看当前正训练集",                    ID_Show_Train_P
+        MENUITEM "查看当前负训练集",                    ID_Show_Train_N
+        MENUITEM SEPARATOR
+        MENUITEM "查看模板图\tF1",                   ID_Show_Model
+        MENUITEM "查看测试图",                       ID_Show_Test
+        MENUITEM SEPARATOR
+        MENUITEM "查看对比图1",                      ID_show_obj1
+        MENUITEM "查看对比图2",                      ID_show_obj2
+        MENUITEM SEPARATOR
+        MENUITEM "清空历史记录",                      ID_Clear
+        MENUITEM "重置所有",                        ID_Clear_all
+        MENUITEM SEPARATOR
+        MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
+    END
+    POPUP "单图匹配(&A)"
+    BEGIN
+        MENUITEM "载入图1(&N)",                    ID_FILE_open1
+        MENUITEM "载入图2(&O)",                    ID_FILE_open2
+        MENUITEM "综合匹配",                        ID_match_all
+        MENUITEM "surf角点检测",                    ID_match_surf
+        MENUITEM SEPARATOR
+        MENUITEM "保存匹配结果图像",                    ID_Save_Match
+    END
+    POPUP "高级(&D)"
+    BEGIN
+        MENUITEM "开发者选项\tF9",                   ID_AdvancedSet
+        MENUITEM "读取演化路径\tR",                   ID_readEvoPath
+        MENUITEM "保存演化路径\tS",                   ID_saveEvoPath
+        MENUITEM SEPARATOR
+        MENUITEM "读取模板和训练集",                    ID_readModelTrain
+        MENUITEM "保存模板和训练集",                    ID_saveModelTrain
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "使用帮助\tF2",                    ID_UseHelp
+        MENUITEM "更新说明",                        32825
+        MENUITEM "关于... (&A)",                  ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "T",            ID_Add_Test,            VIRTKEY, CONTROL, NOINVERT
+    VK_F9,          ID_AdvancedSet,         VIRTKEY, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_match_all,           VIRTKEY, SHIFT, NOINVERT
+    "O",            ID_Open_Model_many,     VIRTKEY, CONTROL, NOINVERT
+    VK_ESCAPE,      ID_Quit,                VIRTKEY, NOINVERT
+    "R",            ID_readEvoPath,         VIRTKEY, NOINVERT
+    "R",            ID_readModelTrain,      VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_saveEvoPath,         VIRTKEY, NOINVERT
+    "S",            ID_saveModelTrain,      VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_Show_Model,          VIRTKEY, NOINVERT
+    "N",            ID_Show_Train_N,        VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_Show_Train_P,        VIRTKEY, CONTROL, NOINVERT
+    VK_SPACE,       ID_Start_Evolution,     VIRTKEY, CONTROL, NOINVERT
+    "M",            ID_Start_Match,         VIRTKEY, CONTROL, NOINVERT
+    VK_F2,          ID_UseHelp,             VIRTKEY, NOINVERT
+    "N",            IDC_train_n,            VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "P",            IDC_train_p,            VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "S",            IDD_ResizeWindow,       VIRTKEY, SHIFT, CONTROL, ALT, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 251, 66
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 WordsMatch 2.0"
+FONT 9, "宋体", 0, 0, 0x0
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,21,20,20
+    LTEXT           "WordsMatch 2.0 正式版",IDC_STATIC,36,9,119,8,SS_NOPREFIX
+    LTEXT           "版权所有(C)    All rights reserved by Dr.LG && webary\n\n有疑问或建议请联系webary@sina.cn          2015.3.2",IDC_STATIC,36,27,209,30
+    DEFPUSHBUTTON   "确定",IDOK,195,4,50,14,WS_GROUP
+END
+
+IDD_IMGMATCH_FORM DIALOGEX 0, 0, 401, 232
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_BORDER
+EXSTYLE WS_EX_ACCEPTFILES | WS_EX_APPWINDOW
+FONT 11, "楷体", 400, 0, 0x86
+BEGIN
+    EDITTEXT        IDC_log,6,69,389,153,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | ES_WANTRETURN | NOT WS_BORDER | WS_VSCROLL,WS_EX_TRANSPARENT | WS_EX_STATICEDGE
+    GROUPBOX        "操作历史记录",IDC_STATIC,3,59,396,168
+    LTEXT           "→",IDC_STATIC,67,23,8,8
+    GROUPBOX        "载入训练集",IDC_STATIC,83,4,75,44
+    PUSHBUTTON      "正训练集",IDC_train_p,87,16,42,14
+    PUSHBUTTON      "负训练集",IDC_train_n,87,32,42,14
+    LTEXT           "→",IDC_STATIC,167,23,8,8
+    PUSHBUTTON      "开始演化训练",IDC_start_evolution,184,17,55,19
+    LTEXT           "→",IDC_STATIC,249,22,8,8
+    PUSHBUTTON      "新增测试集",IDC_open_test,268,17,49,14
+    LTEXT           "→",IDC_STATIC,329,23,8,8
+    PUSHBUTTON      "开始匹配",IDC_start_match,345,17,48,19
+    PUSHBUTTON      "帮助",IDC_train_help,134,18,20,12
+    PUSHBUTTON      "重置",IDC_train_reset,134,32,20,12
+    GROUPBOX        "",IDC_STATIC,132,11,24,35
+    GROUPBOX        "载入测试集",IDC_STATIC,264,6,57,42
+    PUSHBUTTON      "帮助",IDC_test_help,268,32,22,13
+    PUSHBUTTON      "重置",IDC_test_reset,295,32,22,13
+    PUSHBUTTON      "载入模板图",IDC_many_model,10,18,51,19,0,WS_EX_TRANSPARENT
+END
+
+IDD_AdvancedSet DIALOGEX 0, 0, 236, 115
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "开发者选项 - 高级设置"
+FONT 10, "微软雅黑", 400, 0, 0x86
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,155,100,35,13
+    PUSHBUTTON      "取消",IDCANCEL,196,100,35,13
+    EDITTEXT        IDC_wt,58,23,32,12,ES_AUTOHSCROLL | ES_NUMBER,WS_EX_RIGHT
+    LTEXT           "秒",IDC_STATIC,93,25,8,8
+    LTEXT           "提示：非开发人员请谨慎使用该功能",IDC_STATIC,5,102,109,8
+    GROUPBOX        "询问等待时间",IDC_STATIC,53,14,50,23
+    GROUPBOX        "演化允许误差",IDC_STATIC,129,14,52,23
+    EDITTEXT        IDC_EDIT1,133,23,33,12,ES_AUTOHSCROLL,WS_EX_RIGHT
+    LTEXT           "%",IDC_STATIC,170,25,8,8
+    GROUPBOX        "演化模板列数",IDC_STATIC,8,39,52,23
+    EDITTEXT        IDC_EDIT2,15,48,29,12,ES_AUTOHSCROLL | ES_NUMBER,WS_EX_RIGHT
+    LTEXT           "列",IDC_STATIC,49,50,9,8
+    GROUPBOX        "偏向性系数",IDC_STATIC,91,39,52,23
+    EDITTEXT        IDC_abs,96,48,25,12,ES_AUTOHSCROLL,WS_EX_RIGHT
+    PUSHBUTTON      "帮助",IDC_help_abs,123,49,17,10
+    LTEXT           "notice：以下参数只在演化过程中生效",IDC_STATIC,13,3,133,8
+    GROUPBOX        "各特征的系数设置",IDC_STATIC,8,63,219,31
+    LTEXT           "   wh          pro           hu           surf          wt             is            bias",IDC_STATIC,13,70,211,8
+    EDITTEXT        IDC_ratio1,13,80,23,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ratio2,43,80,22,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ratio3,73,80,22,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ratio4,105,80,22,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ratio5,136,80,22,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ratio6,167,80,22,10,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ratio7,198,80,23,10,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_balance_r,180,48,25,11,ES_AUTOHSCROLL,WS_EX_RIGHT
+    PUSHBUTTON      "帮助",IDC_help_balance,207,48,17,10
+    GROUPBOX        "正负平衡系数",IDC_STATIC,176,39,51,23
+END
+
+IDD_UpdateLog DIALOGEX 0, 0, 243, 147
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "软件更新日志"
+FONT 10, "微软雅黑", 400, 0, 0x86
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,201,134,42,12
+    EDITTEXT        IDC_Update_log,2,3,239,129,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | WS_VSCROLL
+END
+
+IDD_useHelp DIALOGEX 0, 0, 369, 180
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "使用帮助"
+FONT 10, "微软雅黑", 400, 0, 0x86
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,311,163,50,14
+    LTEXT           "    step1：载入模板图，如果选择载入多幅模板图请一次性载入所有模板图\n\n    step2：载入训练集——分别新增正、负训练集（可同时载入多幅图像），关于训练集的说明见对应帮助按钮，如果载入错误图像或者想更改载入的训练集请点击重置\n\n    step3：开始演化训练，等待演化完成，继续下面步骤\n\n    step4：载入测试集，新增测试图（可同时载入多幅图像），对测试集不明白可以点击右边的帮助按钮，载入错误测试集或者想更改测试集请点击重置按钮\n\n",IDC_STATIC,4,2,357,72
+    LTEXT           "    step5：开始匹配，将会在下方给出匹配结果：测试集数据路径 + 匹配/不匹配\n\n\n附加功能：1. 随时可以在“查看”下面查看所有载入数据，也可重置所有设置\n\n2. 单幅图与单幅图简单匹配，并给出几个显著特征的相似度（综合相似度仅供参考）\n\n3. 如果需要保存演化后路径，请在完成演化后选择：“高级设置”-“保存演化路径”，选择需要保存的目标位置。\n\n4. 需要读取路径直接进行匹配时，请选择：“高级设置”-“读取演化路径”，选择已保存的路径文件后载入测试集匹配即可。",IDC_STATIC,2,81,362,80
+END
+
+IDD_ChooseType DIALOGEX 0, 0, 174, 88
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "选择载入类型"
+FONT 12, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "模板图",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,41,22,32,10
+    CONTROL         "正训练集",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,90,22,38,10
+    CONTROL         "负训练集",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,41,41,38,10
+    CONTROL         "测试集",IDC_RADIO4,"Button",BS_AUTORADIOBUTTON,90,41,38,10
+    LTEXT           "你拖入了文件，请问你希望作为哪种类型载入？",IDC_STATIC,12,6,150,8
+    DEFPUSHBUTTON   "确定",IDOK,25,63,50,14
+    PUSHBUTTON      "取消",IDCANCEL,96,63,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,0,0
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "FileDescription", "智能签名识别系统"
+            VALUE "FileVersion", "v2.0"
+            VALUE "InternalName", "WordsMatch"
+            VALUE "LegalCopyright", "版权所有 (C) 2014"
+            VALUE "OriginalFilename", "imgMatch.EXE"
+            VALUE "ProductName", "智能签名识别系统"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        RIGHTMARGIN, 248
+        TOPMARGIN, 2
+        BOTTOMMARGIN, 63
+    END
+
+    IDD_IMGMATCH_FORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        BOTTOMMARGIN, 227
+        HORZGUIDE, 215
+    END
+
+    IDD_AdvancedSet, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 113
+    END
+
+    IDD_UpdateLog, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 236
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 140
+    END
+
+    IDD_useHelp, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 362
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_ChooseType, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 167
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 81
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP                  "res\\bg3.bmp"
+IDB_BITMAP2             BITMAP                  "res\\bg4.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "imgMatch\n\nImgMat\n\n\nImgMatch.Document\nImgMat Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "imgMatch"
+    AFX_IDS_IDLEMESSAGE     "就绪"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "扩展名"
+    ID_INDICATOR_CAPS       "大写"
+    ID_INDICATOR_NUM        "数字"
+    ID_INDICATOR_SCRL       "滚动"
+    ID_INDICATOR_OVR        "改写"
+    ID_INDICATOR_REC        "记录"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "建立新文档\n新建"
+    ID_FILE_OPEN            "打开一个现有文档\n打开"
+    ID_FILE_CLOSE           "关闭活动文档\n关闭"
+    ID_FILE_SAVE            "保存活动文档\n保存"
+    ID_FILE_SAVE_AS         "将活动文档以一个新文件名保存\n另存为"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "显示程序信息，版本号和版权\n关于"
+    ID_APP_EXIT             "退出应用程序"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "打开该文档"
+    ID_FILE_MRU_FILE2       "打开该文档"
+    ID_FILE_MRU_FILE3       "打开该文档"
+    ID_FILE_MRU_FILE4       "打开该文档"
+    ID_FILE_MRU_FILE5       "打开该文档"
+    ID_FILE_MRU_FILE6       "打开该文档"
+    ID_FILE_MRU_FILE7       "打开该文档"
+    ID_FILE_MRU_FILE8       "打开该文档"
+    ID_FILE_MRU_FILE9       "打开该文档"
+    ID_FILE_MRU_FILE10      "打开该文档"
+    ID_FILE_MRU_FILE11      "打开该文档"
+    ID_FILE_MRU_FILE12      "打开该文档"
+    ID_FILE_MRU_FILE13      "打开该文档"
+    ID_FILE_MRU_FILE14      "打开该文档"
+    ID_FILE_MRU_FILE15      "打开该文档"
+    ID_FILE_MRU_FILE16      "打开该文档"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
+    ID_PREV_PANE            "切换回前一个窗格\n前一窗格"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_SPLIT         "将活动的窗口分隔成窗格\n分隔"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "删除被选对象\n删除"
+    ID_EDIT_CLEAR_ALL       "全部删除\n全部删除"
+    ID_EDIT_COPY            "复制被选对象并将其置于剪贴板上\n复制"
+    ID_EDIT_CUT             "剪切被选对象并将其置于剪贴板上\n剪切"
+    ID_EDIT_FIND            "查找指定的正文\n查找"
+    ID_EDIT_PASTE           "插入剪贴板内容\n粘贴"
+    ID_EDIT_REPEAT          "重复上一步操作\n重复"
+    ID_EDIT_REPLACE         "用不同的正文替换指定的正文\n替换"
+    ID_EDIT_SELECT_ALL      "选择整个文档\n选择全部"
+    ID_EDIT_UNDO            "撤消最后一步操作\n撤消"
+    ID_EDIT_REDO            "重新执行先前已撤消的操作\n重新执行"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n显隐状态栏"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "改变窗口大小"
+    AFX_IDS_SCMOVE          "改变窗口位置"
+    AFX_IDS_SCMINIMIZE      "将窗口缩小成图标"
+    AFX_IDS_SCMAXIMIZE      "把窗口放大到最大尺寸"
+    AFX_IDS_SCNEXTWINDOW    "切换到下一个文档窗口"
+    AFX_IDS_SCPREVWINDOW    "切换到先前的文档窗口"
+    AFX_IDS_SCCLOSE         "关闭活动的窗口并提示保存所有文档"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "把窗口恢复到正常大小"
+    AFX_IDS_SCTASKLIST      "激活任务表"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_open1           "载入图1"
+    ID_FILE_open2           "载入图2"
+    ID_show_modal           "显示载入的图1，即模板图"
+    ID_show_obj             "显示载入的图2，即对比图"
+    ID_match_all            "匹配全部特征"
+    ID_match_weight         "匹配字迹轻重比"
+    ID_match_surf           "surf角点检测"
+    ID_train_p              "正训练集，可同时载入多个文件"
+END
+
+STRINGTABLE
+BEGIN
+    ID_Save_Match           "负训练集，可同时载入多个文件"
+    ID_Show_Train_P         "查看当前正训练集"
+    ID_Show_Train_N         "查看当前负训练集"
+    ID_Clear                "载入测试图，用演化后的结果判断测试图是否与模板图匹配"
+    ID_Clear_p              "重置正训练集"
+    ID_Clear_N              "重置负训练集"
+    ID_Clear_all            "清空操作历史记录和数据值（恢复默认状态）"
+    ID_Start_Evolution      "开始演化"
+    ID_Open_Model           "载入单幅模板图"
+    ID_show_obj1            "显示载入的图1"
+    ID_show_obj2            "显示载入的图2"
+    ID_Show_Model           "查看模板图"
+    ID_Show_Test            "查看测试图"
+END
+
+STRINGTABLE
+BEGIN
+    ID_Open_Test            "载入测试图，可载入多张"
+END
+
+STRINGTABLE
+BEGIN
+    ID_train_n              "负训练集，可同时载入多个文件"
+END
+
+STRINGTABLE
+BEGIN
+    ID_Add_Test             "添加测试图，备用匹配"
+    ID_Start_Match          "开始匹配测试图与模版"
+    ID_Clear_Test           "重置测试图数据"
+    ID_Clear_Train          "将载入的训练集全部重置"
+    ID_UseHelp              "软件使用帮助"
+    ID_Open_Model_many      "载入多幅模版图，需要一次性载入所有模板"
+    ID_AdvancedSet          "设置高级参数（非开发者慎用）"
+END
+
+STRINGTABLE
+BEGIN
+    ID_saveEvoPath          "保存本次演化后的路径,以供下次直接读取"
+    ID_readEvoPath          "从文件读取一条演化路径，以省去演化过程，直接载入测试集匹配"
+    ID_readPath             "从文件加载一条路径信息，以跳过演化过程，继续上次操作"
+    ID_updateLog            "软件更新说明"
+    ID_readModelTrain       "读取一条保存好的模板图和训练集的路径"
+    ID_saveModelTrain       "保存当前载入的模板图和训练集的路径"
+END
+
+STRINGTABLE
+BEGIN
+    ID_progress             "                                                                                     "
+    IDD_ResizeWindow        "更改窗口大小"
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\imgMatch.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

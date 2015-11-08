@@ -1,30 +1,31 @@
 #pragma once
 #include "afxwin.h"
 #include "MyBitamp.h"
-class AdvancedSet :	public CDialog
+//é«˜çº§è®¾ç½®ç±»-æ˜¯ä¸€ä¸ªå¯¹è¯æ¡†,å¼€å‘è€…å¯ä»¥æ‰“å¼€è¿™ä¸ªå¯¹è¯æ¡†è®¾ç½®ä¸€äº›å†…éƒ¨å‚æ•°
+class AdvancedSet : public CDialog
 {
 public:
-	AdvancedSet(CWnd* pParent = NULL);
+	AdvancedSet(CWnd* pParent = NULL);  //æ„é€ å‡½æ•°
 	enum { IDD = IDD_AdvancedSet };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual void OnOK();
 	virtual BOOL OnInitDialog();
-	afx_msg int  check_redo(int check,int redo);	//¸Ä±ä´°¿Ú±³¾°Í¼Æ¬
-	afx_msg void OnHelpAbs();	//¶ÔÆ«ÏòĞÔÏµÊıµÄËµÃ÷
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);	//¸Ä±ä´°¿Ú±³¾°Í¼Æ¬
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);//¶Ô¾²Ì¬ÎÄ±¾ÇøÓòÖØ»æ£¬´ïµ½Í¸Ã÷Ğ§¹û
+	afx_msg int  check_redo(int check,int redo);	//æ£€æŸ¥å‚æ•°è¿˜æ˜¯æ’¤é”€
+	afx_msg void OnHelpAbs();	//å¯¹åå‘æ€§ç³»æ•°çš„è¯´æ˜
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);	//æ”¹å˜çª—å£èƒŒæ™¯å›¾ç‰‡
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);//å¯¹é™æ€æ–‡æœ¬åŒºåŸŸé‡ç»˜ï¼Œè¾¾åˆ°é€æ˜æ•ˆæœ
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CMyBitmap bg2;	//´´½¨»­Ë¢±äÁ¿
-	int waitTime;	//µÈ´ıÊ±¼ä
-	double permitError;	//ÔÊĞíÎó²î
-	int EvoCol;		//Ñİ»¯Ä£°åÁĞÊı
-	double absolut;	//Æ«ÏòÏµÊı
-	static const int ratio_num = 7;//µ±Ç°Ê¹ÓÃµÄÌØÕ÷¸öÊı
-	double ratio[ratio_num];//¸÷ÌØÕ÷ËùÕ¼±ÈÀıÏµÊı
+	CMyBitmap bg2;	//åˆ›å»ºç”»åˆ·å˜é‡
+	int waitTime;	//ç­‰å¾…æ—¶é—´
+	double permitError;	//å…è®¸è¯¯å·®
+	int EvoCol;		//æ¼”åŒ–æ¨¡æ¿åˆ—æ•°
+	double absolut;		//åå‘ç³»æ•°
+	static const int ratio_num = 7;//å½“å‰ä½¿ç”¨çš„ç‰¹å¾ä¸ªæ•°
+	double ratio[ratio_num];//å„ç‰¹å¾æ‰€å æ¯”ä¾‹ç³»æ•°
 	afx_msg void OnEnChangeRatio();
 	double balance_ratio;
 	afx_msg void OnBnClickedhelpbalance();
